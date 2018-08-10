@@ -12,6 +12,8 @@ public class MoppyKitUI extends javax.swing.JFrame {
 
     private final MoppyKitPlayerOutput[] outputs;
 
+    private Record record;
+
     public MoppyKitUI(final MoppyKitPlayerOutput... outputs) {
         this.outputs = outputs;
         initComponents();
@@ -24,33 +26,63 @@ public class MoppyKitUI extends javax.swing.JFrame {
             @Override
             public void eventDispatched(AWTEvent event) {
                 char key = ((KeyEvent) event).getKeyChar();
-                int i;
-                switch (event.getID()) {
-                    case KeyEvent.KEY_PRESSED:
-                        //System.out.println("Key pressed " + key);
-                        i = 0;
-                        do {
-                            if (!outputs[i].isPlayingTone()) {
-                                outputs[i].playToneForKey(key);
-                                break;
+                Tone tone = MoppyKitPlayerOutput.getToneForKey(key);
+                if (tone == null) {
+                    // Keine Taste für einen Ton
+                    if (event.getID() == KeyEvent.KEY_PRESSED) {
+                        if (key == '1') {
+                            outputs[0].startRecord();
+                        } else if (key == '2') {
+                            record = outputs[0].stopRecord();
+                        } else if (key == '3') {
+                            outputs[0].playRecord(record);
+                        } else if (key == '4') {
+                            outputs[0].playRecordInLoop(record);
+                        } else if (key == '5') {
+                            outputs[0].stopPlayingRecord();
+                        }
+                    }
+                } else {
+                    int i;
+                    switch (event.getID()) {
+                        case KeyEvent.KEY_PRESSED:
+                            //System.out.println("Key pressed " + key);
+                            i = 0;
+                            do {
+                                if (!outputs[i].isPlayingTone()) {
+                                    outputs[i].playTone(tone);
+                                    break;
+                                }
+                                i++;
+                            } while (i < outputs.length);
+                            // Wenn kein freier Output verfügbar ist, wird der
+                            // Ton auf dem MoppyKitPlayerOutput abgespielt, der 
+                            // bereits am längsten seinen Ton spielt (FIFO).
+                            if (i == outputs.length) {
+                                i = 0;
+                                for(int j = 0; j < outputs.length; j++) {
+                                    if(outputs[j].getToneStart() < outputs[i].getToneStart()) {
+                                        i = j;
+                                    }
+                                }
+                                outputs[i].playTone(tone);
                             }
-                            i++;
-                        } while (i < outputs.length);
-                        break;
-                    case KeyEvent.KEY_TYPED:
-                        //keyTyped((KeyEvent) event);
-                        break;
-                    case KeyEvent.KEY_RELEASED:
-                        //System.out.println("Key released " + key);
-                        i = 0;
-                        do {
-                            if (outputs[i].getCurrentKey() == key) {
-                                outputs[i].stopToneForKey(key);
-                                break;
-                            }
-                            i++;
-                        } while (i < outputs.length);
-                        break;
+                            break;
+                        case KeyEvent.KEY_TYPED:
+                            //keyTyped((KeyEvent) event);
+                            break;
+                        case KeyEvent.KEY_RELEASED:
+                            //System.out.println("Key released " + key);
+                            i = 0;
+                            do {
+                                if (outputs[i].getCurrentTone() == tone) {
+                                    outputs[i].stopTone();
+                                    break;
+                                }
+                                i++;
+                            } while (i < outputs.length);
+                            break;
+                    }
                 }
             }
         }, AWTEvent.KEY_EVENT_MASK);
