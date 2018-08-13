@@ -264,6 +264,15 @@ public class MoppyKitUI extends javax.swing.JFrame {
                                     t = executor.scheduleAtFixedRate(new PrintTask(6), 0, timeFor2Lines, TimeUnit.MILLISECONDS);
                                 }
                             }
+                        } else if (key == ' ') {
+                            for(int i = 0; i < active.length; i++)
+                                active[i] = false;
+                            print("X\n");
+                        }
+                        else if (key == '\n') {
+                            for(int i = 0; i < active.length; i++)
+                                active[i] = false;
+                            print("XXXXX\n");
                         }
                     }
                 } else {
