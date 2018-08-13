@@ -75,17 +75,18 @@ public class MoppyUI {
         // Dies sind die Pins, über die die einzelnen Geräte angesteuert 
         // werden. Werden mehrere Geräte angeschlossen, muss einfach das Array 
         // ergänzt werden.
-        int[] pins = new int[]{2};
+        int[] pins = new int[]{2, 4};
         MoppyKitPlayerOutput[] outputs = new MoppyKitPlayerOutput[pins.length];
         try {
             // Für jeden Pin wird ein MoppyKitPlayerOutput erstellt.
+            MoppyCOMBridge mCOMB = new MoppyCOMBridge(port);
             for (int i = 0; i < pins.length; i++) {
                 outputs[i] = new MoppyKitPlayerOutput(
-                        new MoppyCOMBridge(port), pins[i]
+                        mCOMB, pins[i]
                 );
                 // Da wird keine MIDIChannel verwenden, wird hier lediglich ein 
                 // beliebiger Channel als erstes Argument angegeben.
-                rm.setReceiver(1, outputs[i]);
+                rm.setReceiver(i + 1, outputs[i]);
             }
         } catch (Exception ex) {
             System.out.println("Exception");

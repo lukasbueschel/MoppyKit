@@ -58,295 +58,47 @@ public class MoppyKitUI extends javax.swing.JFrame {
                         } else if (key == '5') {
                             outputs[0].stopPlayingRecord();
                         } else if (key == 'y') {
-                            System.out.println("DefaultPrinter: " + defaultPrinter);
-        
-                            try {
-                                InputStream is = new ByteArrayInputStream(( "XXXXXXXXXX          XXXXX     XXXXX     XXXXXXXXXX          XXXXX     XXXXX     "
-                                                                          + "     XXXXX     XXXXX          XXXXXXXXXX     XXXXX     XXXXX          XXXXXXXXXX\n" ).getBytes("UTF8"));
-                            
-
-                                PrintRequestAttributeSet  pras = new HashPrintRequestAttributeSet();
-                                pras.add(new Copies(1));
-
-                                DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
-                                Doc doc = new SimpleDoc(is, flavor, null);
-                                DocPrintJob job = service.createPrintJob();
-                                
-
-                                PrintJobWatcher pjw = new PrintJobWatcher(job);
-                                
-                                try {
-                                    job.print(doc, pras);
-                                } catch (PrintException e) {
-                                    System.out.println("PrintException: " + e);
-                                }
-                                
-                                pjw.waitForDone();
-                                try {
-                                    is.close();
-                                } catch (IOException e) {
-                                    System.out.println("IOException: " + e);
-                                }
-                            } catch (UnsupportedEncodingException e) {
-                                System.out.println("UnsupportedEncodingException: " + e);
-                            }
+                            print( ( "XXXXXXXXXX          XXXXX     XXXXX     XXXXXXXXXX          XXXXX     XXXXX     "
+                                   + "     XXXXX     XXXXX          XXXXXXXXXX     XXXXX     XXXXX          XXXXXXXXXX\n" ));
                         } else if (key == 'x') {
-                            System.out.println("DefaultPrinter: " + defaultPrinter);
-        
-                            try {
-                                InputStream is = new ByteArrayInputStream(( "XXXXX               X         X         XXXXX               X         X         "
-                                                                        + "         X         X               XXXXX         X         X               XXXXX\n").getBytes("UTF8"));
-                            
-
-                                PrintRequestAttributeSet  pras = new HashPrintRequestAttributeSet();
-                                pras.add(new Copies(1));
-
-                                DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
-                                Doc doc = new SimpleDoc(is, flavor, null);
-                                DocPrintJob job = service.createPrintJob();
-                                
-
-                                PrintJobWatcher pjw = new PrintJobWatcher(job);
-                                
-                                try {
-                                    job.print(doc, pras);
-                                } catch (PrintException e) {
-                                    System.out.println("PrintException: " + e);
-                                }
-                                
-                                pjw.waitForDone();
-                                try {
-                                    is.close();
-                                } catch (IOException e) {
-                                    System.out.println("IOException: " + e);
-                                }
-                            } catch (UnsupportedEncodingException e) {
-                                System.out.println("UnsupportedEncodingException: " + e);
-                            }
+                            print(( "XXXXX               X         X         XXXXX               X         X         "
+                                  + "         X         X               XXXXX         X         X               XXXXX\n"));
                         } else if (key == 'c') {
-                            System.out.println("DefaultPrinter: " + defaultPrinter);
-        
-                            try {
-                                InputStream is = new ByteArrayInputStream(( "XXXXXXXXXX          XXXXX               XXXXX               XXXXX               "
-                                                                        + "               XXXXX               XXXXX               XXXXX          XXXXXXXXXX\n").getBytes("UTF8"));
-                            
-
-                                PrintRequestAttributeSet  pras = new HashPrintRequestAttributeSet();
-                                pras.add(new Copies(1));
-
-                                DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
-                                Doc doc = new SimpleDoc(is, flavor, null);
-                                DocPrintJob job = service.createPrintJob();
-                                
-
-                                PrintJobWatcher pjw = new PrintJobWatcher(job);
-                                
-                                try {
-                                    job.print(doc, pras);
-                                } catch (PrintException e) {
-                                    System.out.println("PrintException: " + e);
-                                }
-                                
-                                pjw.waitForDone();
-                                try {
-                                    is.close();
-                                } catch (IOException e) {
-                                    System.out.println("IOException: " + e);
-                                }
-                            } catch (UnsupportedEncodingException e) {
-                                System.out.println("UnsupportedEncodingException: " + e);
-                            }
+                            print(( "XXXXXXXXXX          XXXXX               XXXXX               XXXXX               "
+                                  + "               XXXXX               XXXXX               XXXXX          XXXXXXXXXX\n"));
                         } else if (key == 'v') {
-                            System.out.println("DefaultPrinter: " + defaultPrinter);
-        
-                            try {
-                                InputStream is = new ByteArrayInputStream(( "XXXXX               X                   X                   X                   "
-                                                                        + "                   X                   X                   X               XXXXX\n").getBytes("UTF8"));
-                            
-
-                                PrintRequestAttributeSet  pras = new HashPrintRequestAttributeSet();
-                                pras.add(new Copies(1));
-
-                                DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
-                                Doc doc = new SimpleDoc(is, flavor, null);
-                                DocPrintJob job = service.createPrintJob();
-                                
-
-                                PrintJobWatcher pjw = new PrintJobWatcher(job);
-                                
-                                try {
-                                    job.print(doc, pras);
-                                } catch (PrintException e) {
-                                    System.out.println("PrintException: " + e);
-                                }
-                                
-                                pjw.waitForDone();
-                                try {
-                                    is.close();
-                                } catch (IOException e) {
-                                    System.out.println("IOException: " + e);
-                                }
-                            } catch (UnsupportedEncodingException e) {
-                                System.out.println("UnsupportedEncodingException: " + e);
-                            }
+                            print(( "XXXXX               X                   X                   X                   "
+                                  + "                   X                   X                   X               XXXXX\n"));
                         } else if (key == 'b') {
-                            System.out.println("DefaultPrinter: " + defaultPrinter);
-        
-                            try {
-                                InputStream is = new ByteArrayInputStream(( "XXXXXXXXXX          XXXXX     XXXXX     XXXXX     XXXXX     XXXXX     XXXXX     "
-                                                                        + "     XXXXX     XXXXX     XXXXX     XXXXX     XXXXX     XXXXX          XXXXXXXXXX\n").getBytes("UTF8"));
-                            
-
-                                PrintRequestAttributeSet  pras = new HashPrintRequestAttributeSet();
-                                pras.add(new Copies(1));
-
-                                DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
-                                Doc doc = new SimpleDoc(is, flavor, null);
-                                DocPrintJob job = service.createPrintJob();
-                                
-
-                                PrintJobWatcher pjw = new PrintJobWatcher(job);
-                                
-                                try {
-                                    job.print(doc, pras);
-                                } catch (PrintException e) {
-                                    System.out.println("PrintException: " + e);
-                                }
-                                
-                                pjw.waitForDone();
-                                try {
-                                    is.close();
-                                } catch (IOException e) {
-                                    System.out.println("IOException: " + e);
-                                }
-                            } catch (UnsupportedEncodingException e) {
-                                System.out.println("UnsupportedEncodingException: " + e);
-                            }
+                            print(( "XXXXXXXXXX          XXXXX     XXXXX     XXXXX     XXXXX     XXXXX     XXXXX     "
+                                  + "     XXXXX     XXXXX     XXXXX     XXXXX     XXXXX     XXXXX          XXXXXXXXXX\n"));
                         } else if (key == 'n') {
-                            System.out.println("DefaultPrinter: " + defaultPrinter);
-        
-                            try {
-                                InputStream is = new ByteArrayInputStream(( "XXXXX               X         X         X         X         X         X         "
-                                                                        + "         X         X         X         X         X         X               XXXXX\n")
-                                                                        /*( "XXXXXXXXXX                              XXXXXXXXXX                              "
-                                                                        + "                              XXXXXXXXXX                              XXXXXXXXXX\n")*/.getBytes("UTF8"));
-                            
-
-                                PrintRequestAttributeSet  pras = new HashPrintRequestAttributeSet();
-                                pras.add(new Copies(1));
-
-                                DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
-                                Doc doc = new SimpleDoc(is, flavor, null);
-                                DocPrintJob job = service.createPrintJob();
-                                
-
-                                PrintJobWatcher pjw = new PrintJobWatcher(job);
-                                
-                                try {
-                                    job.print(doc, pras);
-                                } catch (PrintException e) {
-                                    System.out.println("PrintException: " + e);
-                                }
-                                
-                                pjw.waitForDone();
-                                try {
-                                    is.close();
-                                } catch (IOException e) {
-                                    System.out.println("IOException: " + e);
-                                }
-                            } catch (UnsupportedEncodingException e) {
-                                System.out.println("UnsupportedEncodingException: " + e);
-                            }
+                            print(( "XXXXX               X         X         X         X         X         X         "
+                                  + "         X         X         X         X         X         X               XXXXX\n"));
                         } else if (key == 'm') {
-                            System.out.println("DefaultPrinter: " + defaultPrinter);
-        
-                            try {
-                                InputStream is = new ByteArrayInputStream(( "XXXXXXXXXX                              XXXXXXXXXX                              "
-                                                                        + "                              XXXXXXXXXX                              XXXXXXXXXX\n").getBytes("UTF8"));
-                            
-
-                                PrintRequestAttributeSet  pras = new HashPrintRequestAttributeSet();
-                                pras.add(new Copies(1));
-
-                                DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
-                                Doc doc = new SimpleDoc(is, flavor, null);
-                                DocPrintJob job = service.createPrintJob();
-                                
-
-                                PrintJobWatcher pjw = new PrintJobWatcher(job);
-                                
-                                try {
-                                    job.print(doc, pras);
-                                } catch (PrintException e) {
-                                    System.out.println("PrintException: " + e);
-                                }
-                                
-                                pjw.waitForDone();
-                                try {
-                                    is.close();
-                                } catch (IOException e) {
-                                    System.out.println("IOException: " + e);
-                                }
-                            } catch (UnsupportedEncodingException e) {
-                                System.out.println("UnsupportedEncodingException: " + e);
-                            }
+                            print(( "XXXXXXXXXX                              XXXXXXXXXX                              "
+                                  + "                              XXXXXXXXXX                              XXXXXXXXXX\n"));
                         } else if (key == ',') {
-                            System.out.println("DefaultPrinter: " + defaultPrinter);
-        
-                            try {
-                                InputStream is = new ByteArrayInputStream(( "XXXXX               X                   X                   X                   "
-                                                                        + "                   X                   X                   X               XXXXX"
-                                                                        + "XXXXX               X                   X                   X                   "
-                                                                        + "                   X                   X                   X               XXXXX"
-                                                                        + "XXXXX               X                   X                   X                   "
-                                                                        + "                   X                   X                   X               XXXXX"
-                                                                        + "XXXXX               X                   X                   X                   "
-                                                                        + "                   X                   X                   X               XXXXX"
-                                                                        + "XXXXX               X                   X                   X                   "
-                                                                        + "                   X                   X                   X               XXXXX"
-                                                                        + "XXXXX               X                   X                   X                   "
-                                                                        + "                   X                   X                   X               XXXXX"
-                                                                        + "XXXXX               X                   X                   X                   "
-                                                                        + "                   X                   X                   X               XXXXX"
-                                                                        + "XXXXX               X                   X                   X                   "
-                                                                        + "                   X                   X                   X               XXXXX"
-                                                                        + "XXXXX               X                   X                   X                   "
-                                                                        + "                   X                   X                   X               XXXXX"
-                                                                        + "XXXXX               X                   X                   X                   "
-                                                                        + "                   X                   X                   X               XXXXX"
-                                                                        + "XXXXX               X                   X                   X                   "
-                                                                        + "                   X                   X                   X               XXXXX"
-                                                                        + "XXXXX               X                   X                   X                   "
-                                                                        + "                   X                   X                   X               XXXXX"
-                                                                        + "XXXXX               X                   X                   X                   "
-                                                                        + "                   X                   X                   X               XXXXX\n").getBytes("UTF8"));
-                            
-
-                                PrintRequestAttributeSet  pras = new HashPrintRequestAttributeSet();
-                                pras.add(new Copies(1));
-
-                                DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
-                                Doc doc = new SimpleDoc(is, flavor, null);
-                                DocPrintJob job = service.createPrintJob();
-                                
-
-                                PrintJobWatcher pjw = new PrintJobWatcher(job);
-                                
-                                try {
-                                    job.print(doc, pras);
-                                } catch (PrintException e) {
-                                    System.out.println("PrintException: " + e);
-                                }
-                                
-                                pjw.waitForDone();
-                                try {
-                                    is.close();
-                                } catch (IOException e) {
-                                    System.out.println("IOException: " + e);
-                                }
-                            } catch (UnsupportedEncodingException e) {
-                                System.out.println("UnsupportedEncodingException: " + e);
-                            }
+                            print(( "XXXXX               X                   X                   X                   "
+                                  + "                   X                   X                   X               XXXXX"
+                                  + "XXXXX               X                   X                   X                   "
+                                  + "                   X                   X                   X               XXXXX"
+                                  + "XXXXX               X                   X                   X                   "
+                                  + "                   X                   X                   X               XXXXX"
+                                  + "XXXXX               X                   X                   X                   "
+                                  + "                   X                   X                   X               XXXXX"
+                                  + "XXXXX               X                   X                   X                   "
+                                  + "                   X                   X                   X               XXXXX"
+                                  + "XXXXX               X                   X                   X                   "
+                                  + "                   X                   X                   X               XXXXX"
+                                  + "XXXXX               X                   X                   X                   "
+                                  + "                   X                   X                   X               XXXXX"
+                                  + "XXXXX               X                   X                   X                   "
+                                  + "                   X                   X                   X               XXXXX"
+                                  + "XXXXX               X                   X                   X                   "
+                                  + "                   X                   X                   X               XXXXX"
+                                  + "XXXXX               X                   X                   X                   "
+                                  + "                   X                   X                   X               XXXXX\n"));
                         }
                     }
                 } else {
@@ -395,6 +147,39 @@ public class MoppyKitUI extends javax.swing.JFrame {
         }, AWTEvent.KEY_EVENT_MASK);
     }
 
+    private void print(String string){
+        System.out.println("DefaultPrinter: " + defaultPrinter);
+        
+        try {
+            InputStream is = new ByteArrayInputStream(string.getBytes("UTF8"));
+
+
+            PrintRequestAttributeSet  pras = new HashPrintRequestAttributeSet();
+            pras.add(new Copies(1));
+
+            DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
+            Doc doc = new SimpleDoc(is, flavor, null);
+            DocPrintJob job = service.createPrintJob();
+
+
+            PrintJobWatcher pjw = new PrintJobWatcher(job);
+
+            try {
+                job.print(doc, pras);
+            } catch (PrintException e) {
+                System.out.println("PrintException: " + e);
+            }
+
+            pjw.waitForDone();
+            try {
+                is.close();
+            } catch (IOException e) {
+                System.out.println("IOException: " + e);
+            }
+        } catch (UnsupportedEncodingException e) {
+            System.out.println("UnsupportedEncodingException: " + e);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
