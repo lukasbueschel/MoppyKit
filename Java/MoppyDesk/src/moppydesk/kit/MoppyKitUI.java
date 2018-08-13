@@ -18,18 +18,55 @@ import java.awt.AWTEvent;
 import java.awt.event.AWTEventListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.concurrent.*;
 
 /**
  * @author Lukas
  */
 public class MoppyKitUI extends javax.swing.JFrame {
+    
+    class PrintTask implements Runnable {
+        
+        private int index;
+        
+        PrintTask(int index){
+            this.index = index;
+        }
 
+        public void run() {
+            if(active[index])
+                print( printStrings[index] );
+        }
+    }
+
+    private boolean active[] = {false, false, false, false, false, false, false};
+    private String printStrings[] = {( "XXXXXXXXXX          XXXXX     XXXXX     XXXXXXXXXX          XXXXX     XXXXX     "
+                                     + "     XXXXX     XXXXX          XXXXXXXXXX     XXXXX     XXXXX          XXXXXXXXXX\n" ),
+                                     ( "XXXXX               X         X         XXXXX               X         X         "
+                                     + "         X         X               XXXXX         X         X               XXXXX\n"),
+                                     ( "XXXXXXXXXX          XXXXX               XXXXX               XXXXX               "
+                                     + "               XXXXX               XXXXX               XXXXX          XXXXXXXXXX\n"),
+                                     ( "XXXXX               X                   X                   X                   "
+                                     + "                   X                   X                   X               XXXXX\n"),
+                                     ( "XXXXXXXXXX          XXXXX     XXXXX     XXXXX     XXXXX     XXXXX     XXXXX     "
+                                     + "     XXXXX     XXXXX     XXXXX     XXXXX     XXXXX     XXXXX          XXXXXXXXXX\n"),
+                                     ( "XXXXX               X         X         X         X         X         X         "
+                                     + "         X         X         X         X         X         X               XXXXX\n"),
+                                     ( "XXXXXXXXXX                              XXXXXXXXXX                              "
+                                     + "                              XXXXXXXXXX                              XXXXXXXXXX\n")
+                                    };
+    private char lastKey;
+    private long timeFor2Lines = 2400;
+            
     private final MoppyKitPlayerOutput[] outputs;
 
     private Record record;
     
     String defaultPrinter = PrintServiceLookup.lookupDefaultPrintService().getName();
     PrintService service = PrintServiceLookup.lookupDefaultPrintService();
+    
+    static ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(15);
+    static ScheduledFuture<?> t;
 
     public MoppyKitUI(final MoppyKitPlayerOutput... outputs) {
         this.outputs = outputs;
@@ -50,55 +87,183 @@ public class MoppyKitUI extends javax.swing.JFrame {
                         if (key == '1') {
                             outputs[0].startRecord();
                         } else if (key == '2') {
+                            for(int i = 0; i < active.length; i++)
+                                active[i] = false;
                             record = outputs[0].stopRecord();
                         } else if (key == '3') {
+                            for(int i = 0; i < active.length; i++)
+                                active[i] = false;
                             outputs[0].playRecord(record);
                         } else if (key == '4') {
+                            for(int i = 0; i < active.length; i++)
+                                active[i] = false;
                             outputs[0].playRecordInLoop(record);
                         } else if (key == '5') {
+                            for(int i = 0; i < active.length; i++)
+                                active[i] = false;
                             outputs[0].stopPlayingRecord();
                         } else if (key == 'y') {
-                            print( ( "XXXXXXXXXX          XXXXX     XXXXX     XXXXXXXXXX          XXXXX     XXXXX     "
-                                   + "     XXXXX     XXXXX          XXXXXXXXXX     XXXXX     XXXXX          XXXXXXXXXX\n" ));
+                            if(!active[0]){
+                                active[0] = true;
+                                for(int i = 1; i < active.length; i++)
+                                    active[i] = false;
+                                lastKey = key;
+                                                               
+                                t = executor.scheduleAtFixedRate(new PrintTask(0), 0, timeFor2Lines, TimeUnit.MILLISECONDS);
+                            }
+                            else{
+                                if(lastKey == key)
+                                    active[0] = false;
+                                else{
+                                    active[0] = true;
+                                    for(int i = 1; i < active.length; i++)
+                                        active[i] = false;
+                                    lastKey = key;
+                                    t = executor.scheduleAtFixedRate(new PrintTask(0), 0, timeFor2Lines, TimeUnit.MILLISECONDS);
+                                }
+                            }
                         } else if (key == 'x') {
-                            print(( "XXXXX               X         X         XXXXX               X         X         "
-                                  + "         X         X               XXXXX         X         X               XXXXX\n"));
+                            if(!active[1]){
+                                active[0] = false;
+                                active[1] = true;
+                                for(int i = 2; i < active.length; i++)
+                                    active[i] = false;
+                                lastKey = key;
+                                                               
+                                t = executor.scheduleAtFixedRate(new PrintTask(1), 0, timeFor2Lines, TimeUnit.MILLISECONDS);
+                            }
+                            else{
+                                if(lastKey == key)
+                                    active[1] = false;
+                                else{
+                                    active[0] = false;
+                                    active[1] = true;
+                                    for(int i = 2; i < active.length; i++)
+                                        active[i] = false;
+                                    lastKey = key;
+                                    t = executor.scheduleAtFixedRate(new PrintTask(1), 0, timeFor2Lines, TimeUnit.MILLISECONDS);
+                                }
+                            }
                         } else if (key == 'c') {
-                            print(( "XXXXXXXXXX          XXXXX               XXXXX               XXXXX               "
-                                  + "               XXXXX               XXXXX               XXXXX          XXXXXXXXXX\n"));
+                            if(!active[2]){
+                                for(int i = 0; i < 2; i++)
+                                    active[i] = false;
+                                active[2] = true;
+                                for(int i = 3; i < active.length; i++)
+                                    active[i] = false;
+                                lastKey = key;
+                                                               
+                                t = executor.scheduleAtFixedRate(new PrintTask(2), 0, timeFor2Lines, TimeUnit.MILLISECONDS);
+                            }
+                            else{
+                                if(lastKey == key)
+                                    active[2] = false;
+                                else{
+                                    for(int i = 0; i < 2; i++)
+                                        active[i] = false;
+                                    active[2] = true;
+                                    for(int i = 3; i < active.length; i++)
+                                        active[i] = false;
+                                    lastKey = key;
+                                    t = executor.scheduleAtFixedRate(new PrintTask(2), 0, timeFor2Lines, TimeUnit.MILLISECONDS);
+                                }
+                            }
                         } else if (key == 'v') {
-                            print(( "XXXXX               X                   X                   X                   "
-                                  + "                   X                   X                   X               XXXXX\n"));
+                            if(!active[3]){
+                                for(int i = 0; i < 3; i++)
+                                    active[i] = false;
+                                active[3] = true;
+                                for(int i = 4; i < active.length; i++)
+                                    active[i] = false;
+                                lastKey = key;
+                                                               
+                                t = executor.scheduleAtFixedRate(new PrintTask(3), 0, timeFor2Lines, TimeUnit.MILLISECONDS);
+                            }
+                            else{
+                                if(lastKey == key)
+                                    active[3] = false;
+                                else{
+                                    for(int i = 0; i < 3; i++)
+                                        active[i] = false;
+                                    active[3] = true;
+                                    for(int i = 4; i < active.length; i++)
+                                        active[i] = false;
+                                    lastKey = key;
+                                    t = executor.scheduleAtFixedRate(new PrintTask(3), 0, timeFor2Lines, TimeUnit.MILLISECONDS);
+                                }
+                            }
                         } else if (key == 'b') {
-                            print(( "XXXXXXXXXX          XXXXX     XXXXX     XXXXX     XXXXX     XXXXX     XXXXX     "
-                                  + "     XXXXX     XXXXX     XXXXX     XXXXX     XXXXX     XXXXX          XXXXXXXXXX\n"));
+                            if(!active[4]){
+                                for(int i = 0; i < 4; i++)
+                                    active[i] = false;
+                                active[4] = true;
+                                for(int i = 5; i < active.length; i++)
+                                    active[i] = false;
+                                lastKey = key;
+                                                               
+                                t = executor.scheduleAtFixedRate(new PrintTask(4), 0, timeFor2Lines, TimeUnit.MILLISECONDS);
+                            }
+                            else{
+                                if(lastKey == key)
+                                    active[4] = false;
+                                else{
+                                    for(int i = 0; i < 4; i++)
+                                        active[i] = false;
+                                    active[4] = true;
+                                    for(int i = 5; i < active.length; i++)
+                                        active[i] = false;
+                                    lastKey = key;
+                                    t = executor.scheduleAtFixedRate(new PrintTask(4), 0, timeFor2Lines, TimeUnit.MILLISECONDS);
+                                }
+                            }
                         } else if (key == 'n') {
-                            print(( "XXXXX               X         X         X         X         X         X         "
-                                  + "         X         X         X         X         X         X               XXXXX\n"));
+                            if(!active[5]){
+                                for(int i = 0; i < 5; i++)
+                                    active[i] = false;
+                                active[5] = true;
+                                for(int i = 6; i < active.length; i++)
+                                    active[i] = false;
+                                lastKey = key;
+                                                               
+                                t = executor.scheduleAtFixedRate(new PrintTask(5), 0, timeFor2Lines, TimeUnit.MILLISECONDS);
+                            }
+                            else{
+                                if(lastKey == key)
+                                    active[5] = false;
+                                else{
+                                    for(int i = 0; i < 5; i++)
+                                        active[i] = false;
+                                    active[5] = true;
+                                    for(int i = 6; i < active.length; i++)
+                                        active[i] = false;
+                                    lastKey = key;
+                                    t = executor.scheduleAtFixedRate(new PrintTask(5), 0, timeFor2Lines, TimeUnit.MILLISECONDS);
+                                }
+                            }
                         } else if (key == 'm') {
-                            print(( "XXXXXXXXXX                              XXXXXXXXXX                              "
-                                  + "                              XXXXXXXXXX                              XXXXXXXXXX\n"));
-                        } else if (key == ',') {
-                            print(( "XXXXX               X                   X                   X                   "
-                                  + "                   X                   X                   X               XXXXX"
-                                  + "XXXXX               X                   X                   X                   "
-                                  + "                   X                   X                   X               XXXXX"
-                                  + "XXXXX               X                   X                   X                   "
-                                  + "                   X                   X                   X               XXXXX"
-                                  + "XXXXX               X                   X                   X                   "
-                                  + "                   X                   X                   X               XXXXX"
-                                  + "XXXXX               X                   X                   X                   "
-                                  + "                   X                   X                   X               XXXXX"
-                                  + "XXXXX               X                   X                   X                   "
-                                  + "                   X                   X                   X               XXXXX"
-                                  + "XXXXX               X                   X                   X                   "
-                                  + "                   X                   X                   X               XXXXX"
-                                  + "XXXXX               X                   X                   X                   "
-                                  + "                   X                   X                   X               XXXXX"
-                                  + "XXXXX               X                   X                   X                   "
-                                  + "                   X                   X                   X               XXXXX"
-                                  + "XXXXX               X                   X                   X                   "
-                                  + "                   X                   X                   X               XXXXX\n"));
+                            if(!active[6]){
+                                for(int i = 0; i < 6; i++)
+                                    active[i] = false;
+                                active[6] = true;
+                                for(int i = 7; i < active.length; i++)
+                                    active[i] = false;
+                                lastKey = key;
+                                                               
+                                t = executor.scheduleAtFixedRate(new PrintTask(6), 0, timeFor2Lines, TimeUnit.MILLISECONDS);
+                            }
+                            else{
+                                if(lastKey == key)
+                                    active[6] = false;
+                                else{
+                                    for(int i = 0; i < 6; i++)
+                                        active[i] = false;
+                                    active[6] = true;
+                                    for(int i = 7; i < active.length; i++)
+                                        active[i] = false;
+                                    lastKey = key;
+                                    t = executor.scheduleAtFixedRate(new PrintTask(6), 0, timeFor2Lines, TimeUnit.MILLISECONDS);
+                                }
+                            }
                         }
                     }
                 } else {
